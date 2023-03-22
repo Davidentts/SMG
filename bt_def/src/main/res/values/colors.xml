@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="connect_window">#17212B</color>
+    <color name="connect_item">#0E1621</color>
+    <color name="connect_empty">#768C9E</color>
+    <color name="connect_deviceList">#202b36</color>
+    <color name="connect_mac">#91A3A1</color>
+</resources>
