@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Bluetooth_Kotlin</string>
     <string name="start_game">START</string>
+    <string name="result">Your result is:</string>
 </resources>

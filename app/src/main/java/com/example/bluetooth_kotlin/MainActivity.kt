@@ -26,6 +26,16 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private val gameListPl2 = mutableListOf<Int>()
     private lateinit var ibLocal: ImageButton
 
+    private var backPressed: Long = 0
+    override fun onBackPressed() {
+        if (backPressed + 2000 > System.currentTimeMillis()){
+            super.getOnBackPressedDispatcher().onBackPressed()
+        } else {
+            Toast.makeText(baseContext, "Press once again to exit!", Toast.LENGTH_SHORT).show()
+        }
+        backPressed = System.currentTimeMillis()
+    }
+
     private fun initView(){
         ibLocal = findViewById(R.id.ibLocal)
     }
@@ -33,7 +43,7 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startActivity(Intent(this, BaseActivity::class.java))
+        //startActivity(Intent(this, BaseActivity::class.java))
 
         val button: Button = findViewById(R.id.btTest)
         button.setOnClickListener { testPreferences() }
@@ -54,7 +64,7 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     }
 
     private fun testPreferences() {
-        var mac = preferences?.getString(BluetoothConstants.MAC, "шш")
+        var mac = preferences?.getString(BluetoothConstants.MAC, null)
         Log.d("Debugging", "Test Preferences = $mac")
         if (mac != null) {
             btConnection.connect(mac)
