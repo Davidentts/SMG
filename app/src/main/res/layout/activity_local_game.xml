@@ -7,37 +7,193 @@
     android:background="@color/main_menu"
     tools:context=".LocalGameActivity">
 
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHorizontal_bias="0.45"
+        android:textSize="20sp"
+        android:text="@string/status_connected"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/ibReconnection"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="15dp"
+        android:background="@null"
+        app:srcCompat="@drawable/ic_reconnection"
+        app:layout_constraintStart_toEndOf="@id/tvStatus"
+        app:layout_constraintTop_toTopOf="@id/tvStatus"/>
+
     <Button
         android:id="@+id/btStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="Start"
+        android:layout_marginTop="50dp"
+        android:text="@string/start_btn"
+        app:layout_constraintTop_toTopOf="@id/tvStatus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
+
+    <TextView
+        android:id="@+id/tvNamePl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintHorizontal_bias="0.25"
+        android:text="@string/player1_tv"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btStart"/>
+
+    <TextView
+        android:id="@+id/tvNamePl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintHorizontal_bias="0.75"
+        android:text="@string/player2_tv"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btStart"/>
 
     <TextView
         android:id="@+id/tvPl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Нажми для старта!"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintHorizontal_bias="0.20"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        android:text="@string/result_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
+        android:layout_width="3sp"
+        android:layout_height="500dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/tvPl1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btStart" />
+        app:layout_constraintTop_toBottomOf="@id/tvNamePl1" />
 
     <TextView
         android:id="@+id/tvPl2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Игрок 2"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintHorizontal_bias="0.80"
+        android:text="@string/result_tv"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/stickPl1_1"
+        android:layout_width="25dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/inactive_stick"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPl1" />
+        app:layout_constraintBottom_toTopOf="@id/tvPl1" />
+
+    <Button
+        android:id="@+id/stickPl1_2"
+        android:layout_width="25dp"
+        android:layout_height="320dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintStart_toEndOf="@id/stickPl1_1"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl1_1"/>
+
+    <Button
+        android:id="@+id/stickPl1_3"
+        android:layout_width="25dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintStart_toEndOf="@id/stickPl1_2"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl1_2"/>
+
+    <Button
+        android:id="@+id/stickPl1_4"
+        android:layout_width="25dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintStart_toEndOf="@id/stickPl1_3"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl1_3"/>
+
+    <Button
+        android:id="@+id/stickPl1_5"
+        android:layout_width="25dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintStart_toEndOf="@id/stickPl1_4"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl1_4"/>
+
+    <Button
+        android:id="@+id/stickPl2_1"
+        android:layout_width="25dp"
+        android:layout_height="400dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvPl2" />
+
+    <Button
+        android:id="@+id/stickPl2_2"
+        android:layout_width="25dp"
+        android:layout_height="310dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintEnd_toStartOf="@id/stickPl2_1"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl2_1" />
+
+    <Button
+        android:id="@+id/stickPl2_3"
+        android:layout_width="25dp"
+        android:layout_height="240dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintEnd_toStartOf="@id/stickPl2_2"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl2_2" />
+
+    <Button
+        android:id="@+id/stickPl2_4"
+        android:layout_width="25dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintEnd_toStartOf="@id/stickPl2_3"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl2_3" />
+
+    <Button
+        android:id="@+id/stickPl2_5"
+        android:layout_width="25dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/inactive_stick"
+        app:layout_constraintEnd_toStartOf="@id/stickPl2_4"
+        app:layout_constraintBottom_toBottomOf="@id/stickPl2_4" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

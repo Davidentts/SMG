@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_menu">#17212B</color>
-    <color name="connect_empty">#768C9E</color>
+    <color name="inactive_stick">#788C9E</color>
     <color name="connect_deviceList">#202b36</color>
     <color name="connect_mac">#91A3A1</color>
 </resources>
