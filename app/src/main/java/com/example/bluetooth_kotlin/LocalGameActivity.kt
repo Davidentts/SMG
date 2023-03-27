@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.bluetooth_kotlin.ble_connect.StatMsg
@@ -30,13 +31,17 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private lateinit var btStart: Button
     private lateinit var tvPl1: TextView
     private lateinit var tvPl2: TextView
+    private lateinit var tvStatus: TextView
+    private lateinit var ibReconnection: ImageButton
 
-    private fun initView(){
+    private fun initView() {
         tvPl1 = findViewById(R.id.tvPl1)
         tvPl2 = findViewById(R.id.tvPl2)
         btStart = findViewById(R.id.btStart)
-
-        statusConnect = StatMsg(context = this)
+        btStart.isEnabled = false
+        tvStatus = findViewById(R.id.tvStatus)
+        ibReconnection = findViewById(R.id.ibReconnection)
+        statusConnect = StatMsg(context = this, tvStatus = tvStatus, btStart = btStart)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +54,8 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
             this.getSharedPreferences(BluetoothConstants.PREFERENCES, Context.MODE_PRIVATE)
 
         btStart.setOnClickListener { startGame() }
+        tvStatus.setOnClickListener { startActivity(Intent(this, BaseActivity::class.java)) }
+        ibReconnection.setOnClickListener { connectToDevice() }
 
         connectToDevice()
     }
@@ -59,18 +66,14 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         if (mac != null) {
             btConnection.connect(mac)
         } else {
-            Toast.makeText(this, "Устройство не выбрано!", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this, BaseActivity::class.java))
+            tvStatus.text = getString(R.string.status_noDevice)
         }
         val myToast = Toast.makeText(this, "MAC: $mac", Toast.LENGTH_SHORT)
         myToast.show()
     }
 
     private fun startGame() {
-        if (statusConnect.status)
-            btConnection.sendMessage("A")
-        else
-            connectToDevice()
+        btConnection.sendMessage("A")
     }
 
     private fun initBtAdapter() {
@@ -87,16 +90,23 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
                     isConnect -> connected()
                     isNotConnect -> notConnection()
                     lost -> lostConnection()
-                    connecting -> Toast.makeText(this@LocalGameActivity, connecting, Toast.LENGTH_SHORT).show()
+                    connecting -> Toast.makeText(
+                        this@LocalGameActivity,
+                        connecting,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     start -> {
                         gameFlag = true
                         Toast.makeText(this@LocalGameActivity, start, Toast.LENGTH_SHORT).show()
                     }
-                    starting -> Toast.makeText(this@LocalGameActivity, starting, Toast.LENGTH_LONG).show()
+                    starting -> Toast.makeText(this@LocalGameActivity, starting, Toast.LENGTH_LONG)
+                        .show()
                     finish -> {
                         gameFlag = false
-                        tvPl1.text = "${getString(R.string.result)} ${gameListPl1.average().toInt()}"
-                        tvPl2.text = "${getString(R.string.result)} ${gameListPl2.average().toInt()}"
+                        tvPl1.text =
+                            "${getString(R.string.result)} ${gameListPl1.average().toInt()}"
+                        tvPl2.text =
+                            "${getString(R.string.result)} ${gameListPl2.average().toInt()}"
                         Log.d("Debugging", "Check sum player1: ${gameListPl1.sum()}")
                         Log.d("Debugging", "Check sum player2: ${gameListPl2.sum()}")
                         gameListPl1.clear()

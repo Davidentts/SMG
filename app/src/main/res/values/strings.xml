@@ -1,5 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Bluetooth_Kotlin</string>
     <string name="start_game">START</string>
-    <string name="result">Your result is:</string>
+    <string name="start_btn">Запуск</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_noDevice">No device</string>
+    <string name="result_tv">Result:</string>
+    <string name="player1_tv" tools:ignore="Typos">Player1</string>
+    <string name="player2_tv">Player2</string>
+    <string name="result">Result:</string>
 </resources>
