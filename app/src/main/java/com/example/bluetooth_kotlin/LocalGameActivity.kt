@@ -61,6 +61,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     }
 
     private fun connectToDevice() {
+        ibReconnection.isEnabled = false
         var mac = preferences?.getString(BluetoothConstants.MAC, null)
         Log.d("Debugging", "Test Preferences = $mac")
         if (mac != null) {
@@ -70,6 +71,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         }
         val myToast = Toast.makeText(this, "MAC: $mac", Toast.LENGTH_SHORT)
         myToast.show()
+        ibReconnection.isEnabled = true
     }
 
     private fun startGame() {

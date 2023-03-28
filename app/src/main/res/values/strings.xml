@@ -3,6 +3,8 @@
     <string name="start_game">START</string>
     <string name="start_btn">Запуск</string>
     <string name="status_connected">Connected</string>
+    <string name="status_cannotConnect">Connection error</string>
+    <string name="status_connectionLost">Connection lost</string>
     <string name="status_noDevice">No device</string>
     <string name="result_tv">Result:</string>
     <string name="player1_tv" tools:ignore="Typos">Player1</string>
