@@ -7,14 +7,18 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.bluetooth_kotlin.ble_connect.StatMsg
+import com.example.bluetooth_kotlin.game_process.LocalAnimation
 import com.example.bt_def.BaseActivity
 import com.example.bt_def.BluetoothConstants
 import com.example.bt_def.BtConnection
@@ -33,6 +37,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private lateinit var tvPl2: TextView
     private lateinit var tvStatus: TextView
     private lateinit var ibReconnection: ImageButton
+    private lateinit var gameProcess: LocalAnimation
 
     private fun initView() {
         tvPl1 = findViewById(R.id.tvPl1)
@@ -42,6 +47,20 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         tvStatus = findViewById(R.id.tvStatus)
         ibReconnection = findViewById(R.id.ibReconnection)
         statusConnect = StatMsg(context = this, tvStatus = tvStatus, btStart = btStart)
+
+        gameProcess = LocalAnimation(listOf(
+            findViewById(R.id.stickPl1_1),
+            findViewById(R.id.stickPl1_2),
+            findViewById(R.id.stickPl1_3),
+            findViewById(R.id.stickPl1_4),
+            findViewById(R.id.stickPl1_5)
+        ), listOf(
+            findViewById(R.id.stickPl2_1),
+            findViewById(R.id.stickPl2_2),
+            findViewById(R.id.stickPl2_3),
+            findViewById(R.id.stickPl2_4),
+            findViewById(R.id.stickPl2_5)
+        ))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +87,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
             btConnection.connect(mac)
         } else {
             tvStatus.text = getString(R.string.status_noDevice)
+            tvStatus.setTextColor(Color.RED)
         }
         val myToast = Toast.makeText(this, "MAC: $mac", Toast.LENGTH_SHORT)
         myToast.show()
