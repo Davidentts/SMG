@@ -1,5 +1,6 @@
 package com.example.bluetooth_kotlin
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -12,7 +13,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import com.example.bt_def.BaseActivity
 import com.example.bt_def.BluetoothConstants
 import com.example.bt_def.BtConnection
 import com.example.bt_def.bluetooth.ReceiveThread
@@ -20,13 +20,14 @@ import com.example.bt_def.bluetooth.ReceiveThread
 class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private var preferences: SharedPreferences? = null
     private var bAdapter: BluetoothAdapter? = null
-    lateinit var btConnection: BtConnection
+    private lateinit var btConnection: BtConnection
     private var gameFlag: Boolean = false
     private val gameListPl1 = mutableListOf<Int>()
     private val gameListPl2 = mutableListOf<Int>()
     private lateinit var ibLocal: ImageButton
 
     private var backPressed: Long = 0
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (backPressed + 2000 > System.currentTimeMillis()){
             super.getOnBackPressedDispatcher().onBackPressed()
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     }
 
     private fun testPreferences() {
-        var mac = preferences?.getString(BluetoothConstants.MAC, null)
+        val mac = preferences?.getString(BluetoothConstants.MAC, null)
         Log.d("Debugging", "Test Preferences = $mac")
         if (mac != null) {
             btConnection.connect(mac)
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         btConnection = BtConnection(bAdapter, this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onReceive(message: String) {
         runOnUiThread {
             val tView: TextView = findViewById(R.id.textView)
@@ -97,7 +99,7 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
             }
             if (gameFlag && message != "START!") {
                 if(message.first() == '<' && message.last() == '>') {
-                    var msg = message.removePrefix("<").removeSuffix(">")
+                    val msg = message.removePrefix("<").removeSuffix(">")
                     gameListPl1.add(msg.substringBefore(',').toInt())
                     gameListPl2.add(msg.substringAfter(',').toInt())
                 }
