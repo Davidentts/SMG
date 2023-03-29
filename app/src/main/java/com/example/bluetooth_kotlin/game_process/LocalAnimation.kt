@@ -32,7 +32,7 @@ class LocalAnimation(
                 in 336 until 504 -> updateColorSticksPl1Up(2)
                 in 504 until 672 -> updateColorSticksPl1Up(3)
                 in 672 until 840 -> updateColorSticksPl1Up(4)
-                in 840 until 999 -> updateColorSticksPl1Up(5)
+                in 840 until 1000 -> updateColorSticksPl1Up(5)
             }
         } else {
             when (tempPl1) {
@@ -40,7 +40,7 @@ class LocalAnimation(
                 in 336 until 504 -> updateColorSticksPl1Down(1)
                 in 504 until 672 -> updateColorSticksPl1Down(2)
                 in 672 until 840 -> updateColorSticksPl1Down(3)
-                in 840 until 999 -> updateColorSticksPl1Down(4)
+                in 840 until 1000 -> updateColorSticksPl1Down(4)
             }
         }
         player1 = tempPl1
@@ -51,7 +51,7 @@ class LocalAnimation(
                 in 336 until 504 -> updateColorSticksPl2Up(2)
                 in 504 until 672 -> updateColorSticksPl2Up(3)
                 in 672 until 840 -> updateColorSticksPl2Up(4)
-                in 840 until 999 -> updateColorSticksPl2Up(5)
+                in 840 until 1000 -> updateColorSticksPl2Up(5)
             }
         } else {
             when (tempPl2) {
@@ -59,7 +59,7 @@ class LocalAnimation(
                 in 336 until 504 -> updateColorSticksPl2Down(1)
                 in 504 until 672 -> updateColorSticksPl2Down(2)
                 in 672 until 840 -> updateColorSticksPl2Down(3)
-                in 840 until 999 -> updateColorSticksPl2Down(4)
+                in 840 until 1000 -> updateColorSticksPl2Down(4)
             }
         }
         player2 = tempPl2
