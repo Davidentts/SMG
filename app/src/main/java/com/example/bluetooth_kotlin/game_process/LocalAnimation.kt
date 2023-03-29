@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.bluetooth_kotlin.R
-import org.w3c.dom.Text
 
 class LocalAnimation(
     private val context: Context,
@@ -16,14 +15,14 @@ class LocalAnimation(
     private val tvPl1: TextView,
     private val tvPl2: TextView,
     numberOfPlayers: Int = 2
-) : GameProcess(numberOfPlayers) {
+) : GameProcess(numberOfPlayers), Animation {
 
     private var player1 = 0
     private var player2 = 0
     private val isOnStickPl1 = mutableListOf(false, false, false, false, false)
     private val isOnStickPl2 = mutableListOf(false, false, false, false, false)
 
-    fun update(msg: String) {
+    override fun update() {
         val tempPl1 = listOfDataPlayers[0].last()
         val tempPl2 = listOfDataPlayers[1].last()
 
@@ -69,7 +68,10 @@ class LocalAnimation(
     private fun updateColorSticksPl1Up(num: Int) {
         for (i in 0 until num) {
             if (!isOnStickPl1[i]) {
-                listOfSticksPl1[i].setBackgroundColor(context.resources.getColor(R.color.active_stick))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    listOfSticksPl1[i].setBackgroundColor(
+                        context.resources.getColor(R.color.active_stick, null))
+                }
                 isOnStickPl1[i] = true
                 break
             }
@@ -79,7 +81,11 @@ class LocalAnimation(
     private fun updateColorSticksPl2Up(num: Int) {
         for (i in 0 until num) {
             if (!isOnStickPl2[i]) {
-                listOfSticksPl2[i].setBackgroundColor(context.resources.getColor(R.color.active_stick))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    listOfSticksPl2[i].setBackgroundColor(
+                        context.resources.getColor(R.color.active_stick, null)
+                    )
+                }
                 isOnStickPl2[i] = true
                 break
             }
@@ -89,7 +95,10 @@ class LocalAnimation(
     private fun updateColorSticksPl1Down(num: Int) {
         for (i in 4 downTo num) {
             if (isOnStickPl1[i]) {
-                listOfSticksPl1[i].setBackgroundColor(context.resources.getColor(R.color.inactive_stick))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    listOfSticksPl1[i].setBackgroundColor(
+                        context.resources.getColor(R.color.inactive_stick,null))
+                }
                 isOnStickPl1[i] = false
                 break
             }
@@ -99,19 +108,22 @@ class LocalAnimation(
     private fun updateColorSticksPl2Down(num: Int) {
         for (i in 4 downTo num) {
             if (isOnStickPl2[i]) {
-                listOfSticksPl2[i].setBackgroundColor(context.resources.getColor(R.color.inactive_stick))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    listOfSticksPl2[i].setBackgroundColor(
+                        context.resources.getColor(R.color.inactive_stick, null))
+                }
                 isOnStickPl2[i] = false
                 break
             }
         }
     }
 
-    fun addNewData(msg: String): List<Int> {
+    override fun addNewData(msg: String): List<Int> {
         return addData(msg)
     }
 
     @SuppressLint("SetTextI18n")
-    fun stopGame() {
+    override fun stopGame() {
         tvPl1.text =
             "${context.getString(R.string.result)} ${listOfDataPlayers[0].average().toInt()}"
         tvPl2.text =
@@ -132,19 +144,25 @@ class LocalAnimation(
         }
     }
 
-    fun clearAnimation(){
+    override fun clearAnimation() {
         tvPl1.text = context.getString(R.string.result)
         tvPl2.text = context.getString(R.string.result)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             tvPl1.setTextColor(context.getColor(R.color.white))
             tvPl2.setTextColor(context.getColor(R.color.white))
         }
-        for (index in listOfSticksPl1.indices){
-            listOfSticksPl1[index].setBackgroundColor(context.resources.getColor(R.color.inactive_stick))
+        for (index in listOfSticksPl1.indices) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                listOfSticksPl1[index].setBackgroundColor(
+                    context.resources.getColor(R.color.inactive_stick, null))
+            }
             isOnStickPl1[index] = false
         }
-        for (index in listOfSticksPl2.indices){
-            listOfSticksPl2[index].setBackgroundColor(context.resources.getColor(R.color.inactive_stick))
+        for (index in listOfSticksPl2.indices) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                listOfSticksPl2[index].setBackgroundColor(
+                    context.resources.getColor(R.color.inactive_stick, null))
+            }
             isOnStickPl2[index] = false
         }
     }

@@ -141,7 +141,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
             }
             if (gameFlag && message != START) {
                 gameProcess.addNewData(message)
-                gameProcess.update(message)
+                gameProcess.update()
             }
         }
     }
