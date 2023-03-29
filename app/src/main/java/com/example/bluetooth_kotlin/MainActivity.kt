@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //startActivity(Intent(this, BaseActivity::class.java))
 
         val button: Button = findViewById(R.id.btTest)
         button.setOnClickListener { testPreferences() }
@@ -54,7 +53,6 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         buttonSendB.setOnClickListener { btConnection.sendMessage("B") }
 
         initView()
-        //val ibLocal: ImageButton = findViewById(R.id.ibLocal)
         ibLocal.setOnClickListener { startActivity(Intent(this ,LocalGameActivity::class.java)) }
 
         initBtAdapter()

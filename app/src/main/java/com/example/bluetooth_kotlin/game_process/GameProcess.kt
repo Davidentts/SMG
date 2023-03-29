@@ -11,10 +11,10 @@ open class GameProcess(
         const val SUM = 1
     }
 
-    private val listOfDataPlayers =
+    protected val listOfDataPlayers =
         List<MutableList<Int>>(numberOfPlayers) { MutableList<Int>(0) { 0 } }
 
-    open fun addData(data: String): List<Int> {
+    protected open fun addData(data: String): List<Int> {
         if (data.first() == '<' && data.last() == '>' &&
             data.length == (numberOfPlayers * 3 + 2 + numberOfPlayers - 1)
         ) {
@@ -26,7 +26,12 @@ open class GameProcess(
                     filterData = filterData.removePrefix("$temp,")
                 } else playerData.add(filterData.toInt())
             }
-        } else return listOf()
+        } else {
+            for (playerData in listOfDataPlayers){
+                playerData.add(160)
+            }
+            return listOf(160, 160)/////////
+        }
         return listOfDataPlayers.map { it.last() }
     }
 

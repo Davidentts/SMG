@@ -10,4 +10,7 @@
     <string name="player1_tv" tools:ignore="Typos">Player1</string>
     <string name="player2_tv">Player2</string>
     <string name="result">Result:</string>
+    <string name="countdown_3">3</string>
+    <string name="countdown_2">2</string>
+    <string name="countdown_1">1</string>
 </resources>

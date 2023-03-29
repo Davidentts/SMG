@@ -2,22 +2,29 @@ package com.example.bluetooth_kotlin
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.bluetooth_kotlin.ble_connect.StatMsg
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.CONNECTING
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.COUNTDOWN_1
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.COUNTDOWN_2
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.FINISH
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.IS_CONNECT
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.IS_NOT_CONNECT
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.LOST
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.START
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.STARTING
+import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.START_GAME
 import com.example.bluetooth_kotlin.game_process.LocalAnimation
 import com.example.bt_def.BaseActivity
 import com.example.bt_def.BluetoothConstants
@@ -27,10 +34,8 @@ import com.example.bt_def.bluetooth.ReceiveThread
 class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private var preferences: SharedPreferences? = null
     private var bAdapter: BluetoothAdapter? = null
-    lateinit var btConnection: BtConnection
+    private lateinit var btConnection: BtConnection
     private var gameFlag: Boolean = false
-    private var gameListPl1 = mutableListOf<Int>()
-    private var gameListPl2 = mutableListOf<Int>()
     private lateinit var statusConnect: StatMsg
     private lateinit var btStart: Button
     private lateinit var tvPl1: TextView
@@ -38,6 +43,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private lateinit var tvStatus: TextView
     private lateinit var ibReconnection: ImageButton
     private lateinit var gameProcess: LocalAnimation
+    private lateinit var countdown: TextView
 
     private fun initView() {
         tvPl1 = findViewById(R.id.tvPl1)
@@ -47,20 +53,24 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         tvStatus = findViewById(R.id.tvStatus)
         ibReconnection = findViewById(R.id.ibReconnection)
         statusConnect = StatMsg(context = this, tvStatus = tvStatus, btStart = btStart)
+        countdown = findViewById(R.id.countdown)
 
-        gameProcess = LocalAnimation(listOf(
-            findViewById(R.id.stickPl1_1),
-            findViewById(R.id.stickPl1_2),
-            findViewById(R.id.stickPl1_3),
-            findViewById(R.id.stickPl1_4),
-            findViewById(R.id.stickPl1_5)
-        ), listOf(
-            findViewById(R.id.stickPl2_1),
-            findViewById(R.id.stickPl2_2),
-            findViewById(R.id.stickPl2_3),
-            findViewById(R.id.stickPl2_4),
-            findViewById(R.id.stickPl2_5)
-        ))
+        gameProcess = LocalAnimation(
+            this,
+            listOf(
+                findViewById(R.id.stickPl1_5),
+                findViewById(R.id.stickPl1_4),
+                findViewById(R.id.stickPl1_3),
+                findViewById(R.id.stickPl1_2),
+                findViewById(R.id.stickPl1_1)
+            ), listOf(
+                findViewById(R.id.stickPl2_5),
+                findViewById(R.id.stickPl2_4),
+                findViewById(R.id.stickPl2_3),
+                findViewById(R.id.stickPl2_2),
+                findViewById(R.id.stickPl2_1)
+            ), tvPl1, tvPl2
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +91,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
 
     private fun connectToDevice() {
         ibReconnection.isEnabled = false
-        var mac = preferences?.getString(BluetoothConstants.MAC, null)
+        val mac = preferences?.getString(BluetoothConstants.MAC, null)
         Log.d("Debugging", "Test Preferences = $mac")
         if (mac != null) {
             btConnection.connect(mac)
@@ -95,7 +105,8 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     }
 
     private fun startGame() {
-        btConnection.sendMessage("A")
+        btConnection.sendMessage("L")
+        gameProcess.clearAnimation()
     }
 
     private fun initBtAdapter() {
@@ -106,44 +117,31 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
 
     @SuppressLint("SetTextI18n")
     override fun onReceive(message: String) {
+        val context = this
         runOnUiThread {
             with(statusConnect) {
                 when (message) {
-                    isConnect -> connected()
-                    isNotConnect -> notConnection()
-                    lost -> lostConnection()
-                    connecting -> Toast.makeText(
-                        this@LocalGameActivity,
-                        connecting,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    start -> {
+                    IS_CONNECT -> connected()
+                    IS_NOT_CONNECT -> notConnection()
+                    LOST -> lostConnection()
+                    CONNECTING -> Toast.makeText(context, CONNECTING, Toast.LENGTH_SHORT).show()
+                    STARTING -> countdown.text = context.getString(R.string.countdown_3)
+                    COUNTDOWN_2 -> countdown.text = context.getString(R.string.countdown_2)
+                    COUNTDOWN_1 -> countdown.text = context.getString(R.string.countdown_1)
+                    START -> {
                         gameFlag = true
-                        Toast.makeText(this@LocalGameActivity, start, Toast.LENGTH_SHORT).show()
+                        countdown.text = context.getString(R.string.start_game)
                     }
-                    starting -> Toast.makeText(this@LocalGameActivity, starting, Toast.LENGTH_LONG)
-                        .show()
-                    finish -> {
+                    START_GAME -> countdown.text = ""
+                    FINISH -> {
                         gameFlag = false
-                        tvPl1.text =
-                            "${getString(R.string.result)} ${gameListPl1.average().toInt()}"
-                        tvPl2.text =
-                            "${getString(R.string.result)} ${gameListPl2.average().toInt()}"
-                        Log.d("Debugging", "Check sum player1: ${gameListPl1.sum()}")
-                        Log.d("Debugging", "Check sum player2: ${gameListPl2.sum()}")
-                        gameListPl1.clear()
-                        gameListPl2.clear()
+                        gameProcess.stopGame()
                     }
                 }
             }
-            if (gameFlag && message != statusConnect.start) {
-                if (message.first() == '<' && message.last() == '>' && message.length < 10) {
-                    var msg = message.removePrefix("<").removeSuffix(">")
-                    gameListPl1.add(msg.substringBefore(',').toInt())
-                    gameListPl2.add(msg.substringAfter(',').toInt())
-                    tvPl1.text = gameListPl1.last().toString()
-                    tvPl2.text = gameListPl2.last().toString()
-                }
+            if (gameFlag && message != START) {
+                gameProcess.addNewData(message)
+                gameProcess.update(message)
             }
         }
     }
