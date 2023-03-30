@@ -68,12 +68,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btStart"/>
 
+    <View
+        android:layout_width="3sp"
+        android:layout_height="500dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/tvPl1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNamePl1" />
+
     <TextView
         android:id="@+id/countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="50sp"
-        android:textColor="@color/white"
+        android:textColor="@color/countdown"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,15 +101,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-
-    <View
-        android:layout_width="3sp"
-        android:layout_height="500dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/tvPl1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNamePl1" />
 
     <TextView
         android:id="@+id/tvPl2"

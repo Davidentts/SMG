@@ -25,11 +25,13 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private val gameListPl1 = mutableListOf<Int>()
     private val gameListPl2 = mutableListOf<Int>()
     private lateinit var ibLocal: ImageButton
+    private lateinit var ibBoss: ImageButton
 
     private var backPressed: Long = 0
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (backPressed + 2000 > System.currentTimeMillis()){
+        if (backPressed + 2000 > System.currentTimeMillis()) {
             super.getOnBackPressedDispatcher().onBackPressed()
         } else {
             Toast.makeText(baseContext, "Press once again to exit!", Toast.LENGTH_SHORT).show()
@@ -37,8 +39,9 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         backPressed = System.currentTimeMillis()
     }
 
-    private fun initView(){
+    private fun initView() {
         ibLocal = findViewById(R.id.ibLocal)
+        ibBoss = findViewById(R.id.ibBoss)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +57,8 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         buttonSendB.setOnClickListener { btConnection.sendMessage("B") }
 
         initView()
-        ibLocal.setOnClickListener { startActivity(Intent(this ,LocalGameActivity::class.java)) }
+        ibLocal.setOnClickListener { startActivity(Intent(this, LocalGameActivity::class.java)) }
+        ibBoss.setOnClickListener { startActivity(Intent(this, BossGameActivity::class.java)) }
 
         initBtAdapter()
         preferences =
@@ -98,7 +102,7 @@ class MainActivity : AppCompatActivity(), ReceiveThread.ListenerData {
                 }
             }
             if (gameFlag && message != "START!") {
-                if(message.first() == '<' && message.last() == '>') {
+                if (message.first() == '<' && message.last() == '>') {
                     val msg = message.removePrefix("<").removeSuffix(">")
                     gameListPl1.add(msg.substringBefore(',').toInt())
                     gameListPl2.add(msg.substringAfter(',').toInt())

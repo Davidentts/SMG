@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@+id/buttonSendA" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibBoss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

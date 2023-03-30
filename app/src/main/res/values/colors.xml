@@ -12,4 +12,7 @@
     <color name="active_stick">#D57E44</color>
     <color name="result_winner">#37AC57</color>
     <color name="noDevice">#F44336</color>
+    <color name="boss_eye">#FFFF0000</color>
+    <color name="boss_hit">#FF5722</color>
+    <color name="countdown">#71C5DA</color>
 </resources>
