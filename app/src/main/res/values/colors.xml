@@ -15,4 +15,5 @@
     <color name="boss_eye">#FFFF0000</color>
     <color name="boss_hit">#FF5722</color>
     <color name="countdown">#71C5DA</color>
+    <color name="red">#FFFF0000</color>
 </resources>
