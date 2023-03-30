@@ -137,11 +137,11 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
                         gameFlag = false
                         gameProcess.stopGame()
                     }
+                    else -> if (gameFlag) {
+                        gameProcess.addNewData(message)
+                        gameProcess.update()
+                    }
                 }
-            }
-            if (gameFlag && message != START) {
-                gameProcess.addNewData(message)
-                gameProcess.update()
             }
         }
     }

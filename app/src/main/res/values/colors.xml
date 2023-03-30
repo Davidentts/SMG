@@ -13,7 +13,8 @@
     <color name="result_winner">#37AC57</color>
     <color name="noDevice">#F44336</color>
     <color name="boss_eye">#FFFF0000</color>
-    <color name="boss_hit">#FF5722</color>
-    <color name="countdown">#71C5DA</color>
+    <color name="countdown">#FF5722</color>
+    <color name="defeat">#F87132</color>
+    <color name="victory">#AF14AD</color>
     <color name="red">#FFFF0000</color>
 </resources>

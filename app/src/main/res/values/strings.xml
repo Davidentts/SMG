@@ -14,4 +14,6 @@
     <string name="countdown_2">2</string>
     <string name="countdown_1">1</string>
     <string name="boss_name">BAGEL</string>
+    <string name="victory">VICTORY</string>
+    <string name="defeat">DEFEAT</string>
 </resources>

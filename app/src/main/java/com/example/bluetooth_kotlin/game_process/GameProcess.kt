@@ -43,13 +43,18 @@ open class GameProcess(
             }
             return listOf(160, 160)/////////
         }
+        if (isRobot){
+            for (lastPlayerData in listOfDataPlayers){
+                healthOfBoss -= lastPlayerData.last()
+            }
+        }
         return listOfDataPlayers.map { it.last() }
     }
 
     open fun winner(mode: Int = AVERAGE): Int {
         var result = 0
         if (isRobot) {
-            result = if (healthOfBoss <= 1000)
+            result = if (healthOfBoss <= 500)
                 1 //Player is winner
             else
                 2 //Boss is winner
@@ -71,5 +76,16 @@ open class GameProcess(
             }
         }
         return result
+    }
+
+    open fun healBoss(){
+        healthOfBoss = when (robotPower) {
+            1 -> 46_000
+            2 -> 48_000
+            3 -> 50_000
+            4 -> 54_000
+            5 -> 57_000
+            else -> 50_000
+        }
     }
 }
