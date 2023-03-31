@@ -99,6 +99,7 @@ class BossAnimation(
             tvResult.setTextColor(context.getColor(R.color.white))
             tvCountDown.setTextColor(context.getColor(R.color.countdown))
         }
+        ibBoss.setImageDrawable(context.getDrawable(R.drawable.ic_boss_main))
         tvResult.text = context.getString(R.string.result)
         tvCountDown.text = ""
         tvCountDown.isVisible = false
