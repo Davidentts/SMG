@@ -1,9 +1,11 @@
 package com.example.bluetooth_kotlin.game_process
 
+import java.lang.Exception
+
 open class GameProcess(
     private val numberOfPlayers: Int,
-    val isRobot: Boolean = false,
-    val robotPower: Int = 1
+    private val isRobot: Boolean = false,
+    private val robotPower: Int = 1
 ) {
 
     companion object {
@@ -13,6 +15,15 @@ open class GameProcess(
 
     protected val listOfDataPlayers =
         List<MutableList<Int>>(numberOfPlayers) { MutableList<Int>(0) { 0 } }
+
+    protected var healthOfBoss: Int = when (robotPower) {
+        1 -> 46_000
+        2 -> 48_000
+        3 -> 50_000
+        4 -> 54_000
+        5 -> 57_000
+        else -> 50_000
+    }
 
     protected open fun addData(data: String): List<Int> {
         if (data.first() == '<' && data.last() == '>' &&
@@ -27,22 +38,54 @@ open class GameProcess(
                 } else playerData.add(filterData.toInt())
             }
         } else {
-            for (playerData in listOfDataPlayers){
+            for (playerData in listOfDataPlayers) {
                 playerData.add(160)
             }
             return listOf(160, 160)/////////
+        }
+        if (isRobot){
+            for (lastPlayerData in listOfDataPlayers){
+                healthOfBoss -= lastPlayerData.last()
+            }
         }
         return listOfDataPlayers.map { it.last() }
     }
 
     open fun winner(mode: Int = AVERAGE): Int {
         var result = 0
-        //Добавить реализацию нескольких режимов
-        for (i in 1 until listOfDataPlayers.size) {
-            if (listOfDataPlayers[result].average() < listOfDataPlayers[i].average())
-                result = i
+        if (isRobot) {
+            result = if (healthOfBoss <= 500)
+                1 //Player is winner
+            else
+                2 //Boss is winner
+        } else {
+            when (mode) {
+                AVERAGE -> {
+                    for (i in 1 until listOfDataPlayers.size) {
+                        if (listOfDataPlayers[result].average() < listOfDataPlayers[i].average())
+                            result = i
+                    }
+                }
+                SUM -> {
+                    for (i in 1 until listOfDataPlayers.size) {
+                        if (listOfDataPlayers[result].sum() < listOfDataPlayers[i].sum())
+                            result = i
+                    }
+                }
+                else -> throw Exception("The game mode is specified incorrectly!")
+            }
         }
-
         return result
+    }
+
+    open fun healBoss(){
+        healthOfBoss = when (robotPower) {
+            1 -> 46_000
+            2 -> 48_000
+            3 -> 50_000
+            4 -> 54_000
+            5 -> 57_000
+            else -> 50_000
+        }
     }
 }

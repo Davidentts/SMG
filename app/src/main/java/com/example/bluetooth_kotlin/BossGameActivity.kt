@@ -1,6 +1,5 @@
 package com.example.bluetooth_kotlin
 
-import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -14,6 +13,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import com.example.bluetooth_kotlin.ble_connect.StatMsg
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.CONNECTING
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.COUNTDOWN_1
@@ -25,57 +26,55 @@ import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.LOST
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.START
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.STARTING
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.START_GAME
+import com.example.bluetooth_kotlin.game_process.BossAnimation
 import com.example.bluetooth_kotlin.game_process.LocalAnimation
 import com.example.bt_def.BaseActivity
 import com.example.bt_def.BluetoothConstants
 import com.example.bt_def.BtConnection
 import com.example.bt_def.bluetooth.ReceiveThread
 
-class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
+class BossGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private var preferences: SharedPreferences? = null
     private var bAdapter: BluetoothAdapter? = null
     private lateinit var btConnection: BtConnection
-    private var gameFlag: Boolean = false
     private lateinit var statusConnect: StatMsg
-    private lateinit var btStart: Button
-    private lateinit var tvPl1: TextView
-    private lateinit var tvPl2: TextView
+    private lateinit var gameProcess: BossAnimation
+    private var gameFlag: Boolean = false
     private lateinit var tvStatus: TextView
     private lateinit var ibReconnection: ImageButton
-    private lateinit var gameProcess: LocalAnimation
+    private lateinit var btStart: Button
     private lateinit var countdown: TextView
+    private lateinit var tvResult: TextView
 
     private fun initView() {
-        tvPl1 = findViewById(R.id.tvPl1)
-        tvPl2 = findViewById(R.id.tvPl2)
-        btStart = findViewById(R.id.btStart)
-        btStart.isEnabled = false
         tvStatus = findViewById(R.id.tvStatus)
         ibReconnection = findViewById(R.id.ibReconnection)
-        statusConnect = StatMsg(context = this, tvStatus = tvStatus, btStart = btStart)
-        countdown = findViewById(R.id.countdown)
+        btStart = findViewById(R.id.btStart)
+        countdown = findViewById(R.id.tvCountdown)
+        tvResult = findViewById(R.id.tvResult)
 
-        gameProcess = LocalAnimation(
+        statusConnect = StatMsg(context = this, tvStatus = tvStatus, btStart = btStart)
+        gameProcess = BossAnimation(
             this,
+            findViewById(R.id.constraintBoss),
+            findViewById(R.id.ibBoss),
             listOf(
-                findViewById(R.id.stickPl1_5),
-                findViewById(R.id.stickPl1_4),
-                findViewById(R.id.stickPl1_3),
-                findViewById(R.id.stickPl1_2),
-                findViewById(R.id.stickPl1_1)
-            ), listOf(
-                findViewById(R.id.stickPl2_5),
-                findViewById(R.id.stickPl2_4),
-                findViewById(R.id.stickPl2_3),
-                findViewById(R.id.stickPl2_2),
-                findViewById(R.id.stickPl2_1)
-            ), tvPl1, tvPl2
+                findViewById(R.id.tvHit1),
+                findViewById(R.id.tvHit2),
+                findViewById(R.id.tvHit3),
+                findViewById(R.id.tvHit4),
+                findViewById(R.id.tvHit5),
+                findViewById(R.id.tvHit6),
+                findViewById(R.id.tvHit7),
+                findViewById(R.id.tvHit8)
+            ),
+            tvResult, countdown
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_local_game)
+        setContentView(R.layout.activity_boss_game)
 
         initView()
         initBtAdapter()
@@ -105,7 +104,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     }
 
     private fun startGame() {
-        btConnection.sendMessage("L")
+        btConnection.sendMessage("B")
         gameProcess.clearAnimation()
     }
 
@@ -115,7 +114,6 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         btConnection = BtConnection(bAdapter, this)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onReceive(message: String) {
         val context = this
         runOnUiThread {
@@ -124,15 +122,23 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
                     IS_CONNECT -> connected()
                     IS_NOT_CONNECT -> notConnection()
                     LOST -> lostConnection()
-                    CONNECTING -> Toast.makeText(context, CONNECTING, Toast.LENGTH_SHORT).show()
-                    STARTING -> countdown.text = context.getString(R.string.countdown_3)
+                    CONNECTING -> Toast.makeText(
+                        context, CONNECTING, Toast.LENGTH_SHORT
+                    ).show()
+                    STARTING -> {
+                        countdown.text = context.getString(R.string.countdown_3)
+                        countdown.isVisible = true
+                    }
                     COUNTDOWN_2 -> countdown.text = context.getString(R.string.countdown_2)
                     COUNTDOWN_1 -> countdown.text = context.getString(R.string.countdown_1)
                     START -> {
                         gameFlag = true
                         countdown.text = context.getString(R.string.start_game)
                     }
-                    START_GAME -> countdown.text = ""
+                    START_GAME -> {
+                        countdown.text = ""
+                        countdown.isVisible = false
+                    }
                     FINISH -> {
                         gameFlag = false
                         gameProcess.stopGame()
