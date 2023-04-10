@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.example.bluetooth_kotlin.ble_connect.StatMsg
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.CONNECTING
 import com.example.bluetooth_kotlin.ble_connect.StatMsg.Companion.COUNTDOWN_1
@@ -125,14 +126,20 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
                     IS_NOT_CONNECT -> notConnection()
                     LOST -> lostConnection()
                     CONNECTING -> Toast.makeText(context, CONNECTING, Toast.LENGTH_SHORT).show()
-                    STARTING -> countdown.text = context.getString(R.string.countdown_3)
+                    STARTING -> {
+                        countdown.text = context.getString(R.string.countdown_3)
+                        countdown.isVisible = true
+                    }
                     COUNTDOWN_2 -> countdown.text = context.getString(R.string.countdown_2)
                     COUNTDOWN_1 -> countdown.text = context.getString(R.string.countdown_1)
                     START -> {
                         gameFlag = true
                         countdown.text = context.getString(R.string.start_game)
                     }
-                    START_GAME -> countdown.text = ""
+                    START_GAME -> {
+                        countdown.text = ""
+                        countdown.isVisible = false
+                    }
                     FINISH -> {
                         gameFlag = false
                         gameProcess.stopGame()

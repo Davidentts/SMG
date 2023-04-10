@@ -28,16 +28,16 @@ class LocalAnimation(
 
         if (player1 < tempPl1) {
             when (tempPl1) {
-                in 30 until 100 -> updateColorSticksPl1Up(1)
-                in 100 until 150 -> updateColorSticksPl1Up(2)
+                in 30 until 101 -> updateColorSticksPl1Up(1)
+                in 101 until 150 -> updateColorSticksPl1Up(2)
                 in 150 until 200 -> updateColorSticksPl1Up(3)
                 in 200 until 350 -> updateColorSticksPl1Up(4)
                 in 350 until 1000 -> updateColorSticksPl1Up(5)
             }
         } else {
             when (tempPl1) {
-                in 30 until 100 -> updateColorSticksPl1Down(0)
-                in 100 until 150 -> updateColorSticksPl1Down(1)
+                in 30 until 101 -> updateColorSticksPl1Down(0)
+                in 101 until 150 -> updateColorSticksPl1Down(1)
                 in 150 until 200 -> updateColorSticksPl1Down(2)
                 in 200 until 350 -> updateColorSticksPl1Down(3)
                 in 350 until 1000 -> updateColorSticksPl1Down(4)
@@ -47,16 +47,16 @@ class LocalAnimation(
 
         if (player2 < tempPl2) {
             when (tempPl2) {
-                in 30 until 100 -> updateColorSticksPl2Up(1)
-                in 100 until 150 -> updateColorSticksPl2Up(2)
+                in 30 until 101 -> updateColorSticksPl2Up(1)
+                in 101 until 150 -> updateColorSticksPl2Up(2)
                 in 150 until 200 -> updateColorSticksPl2Up(3)
                 in 200 until 350 -> updateColorSticksPl2Up(4)
                 in 350 until 1000 -> updateColorSticksPl2Up(5)
             }
         } else {
             when (tempPl2) {
-                in 30 until 100 -> updateColorSticksPl2Down(0)
-                in 100 until 150 -> updateColorSticksPl2Down(1)
+                in 30 until 101 -> updateColorSticksPl2Down(0)
+                in 101 until 150 -> updateColorSticksPl2Down(1)
                 in 150 until 200 -> updateColorSticksPl2Down(2)
                 in 200 until 350 -> updateColorSticksPl2Down(3)
                 in 350 until 1000 -> updateColorSticksPl2Down(4)
