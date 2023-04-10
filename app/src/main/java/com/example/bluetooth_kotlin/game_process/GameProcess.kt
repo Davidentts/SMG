@@ -22,7 +22,7 @@ open class GameProcess(
         3 -> 20_000
         4 -> 21_500
         5 -> 23_500
-        else -> 50_000
+        else -> 20_000
     }
 
     protected open fun addData(data: String): List<Int> {
@@ -80,12 +80,12 @@ open class GameProcess(
 
     open fun healBoss(){
         healthOfBoss = when (robotPower) {
-            1 -> 46_000
-            2 -> 48_000
-            3 -> 50_000
-            4 -> 54_000
-            5 -> 57_000
-            else -> 50_000
+            1 -> 18_000
+            2 -> 19_000
+            3 -> 20_000
+            4 -> 21_500
+            5 -> 23_500
+            else -> 20_000
         }
     }
 }

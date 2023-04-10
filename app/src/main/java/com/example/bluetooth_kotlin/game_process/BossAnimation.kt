@@ -29,7 +29,7 @@ class BossAnimation(
 
     override fun update() {
         newHit((0..7).random())
-        tvResult.text = (bossStartHealth - listOfDataPlayers[0].sum()).toString()
+        tvResult.text = healthOfBoss.toString()
         when(getHealthAsPercentage()){
             in 74 downTo 50 -> changeStage(2)
             in 49 downTo 25 -> changeStage(3)
