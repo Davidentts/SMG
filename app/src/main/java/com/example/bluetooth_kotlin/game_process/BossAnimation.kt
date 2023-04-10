@@ -29,6 +29,7 @@ class BossAnimation(
 
     override fun update() {
         newHit((0..7).random())
+        tvResult.text = (bossStartHealth - listOfDataPlayers[0].sum()).toString()
         when(getHealthAsPercentage()){
             in 74 downTo 50 -> changeStage(2)
             in 49 downTo 25 -> changeStage(3)
@@ -42,7 +43,6 @@ class BossAnimation(
         listOfTvHits[indexOfNewHit].isVisible = true
         listOfTvHits[indexOfNewHit].text = listOfDataPlayers[0].last().toString()
         indexOfLastHit = indexOfNewHit
-
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -100,9 +100,11 @@ class BossAnimation(
             tvCountDown.setTextColor(context.getColor(R.color.countdown))
         }
         ibBoss.setImageDrawable(context.getDrawable(R.drawable.ic_boss_main))
-        tvResult.text = context.getString(R.string.result)
+//        tvResult.text = context.getString(R.string.result)
         tvCountDown.text = ""
         tvCountDown.isVisible = false
         tvCountDown.background = context.getDrawable(R.drawable.rounded_countdown)
+
+        tvResult.text = bossStartHealth.toString()
     }
 }

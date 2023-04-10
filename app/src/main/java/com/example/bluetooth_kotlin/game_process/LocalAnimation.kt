@@ -28,38 +28,38 @@ class LocalAnimation(
 
         if (player1 < tempPl1) {
             when (tempPl1) {
-                in 160 until 336 -> updateColorSticksPl1Up(1)
-                in 336 until 504 -> updateColorSticksPl1Up(2)
-                in 504 until 672 -> updateColorSticksPl1Up(3)
-                in 672 until 840 -> updateColorSticksPl1Up(4)
-                in 840 until 1000 -> updateColorSticksPl1Up(5)
+                in 30 until 100 -> updateColorSticksPl1Up(1)
+                in 100 until 150 -> updateColorSticksPl1Up(2)
+                in 150 until 200 -> updateColorSticksPl1Up(3)
+                in 200 until 350 -> updateColorSticksPl1Up(4)
+                in 350 until 1000 -> updateColorSticksPl1Up(5)
             }
         } else {
             when (tempPl1) {
-                in 160 until 336 -> updateColorSticksPl1Down(0)
-                in 336 until 504 -> updateColorSticksPl1Down(1)
-                in 504 until 672 -> updateColorSticksPl1Down(2)
-                in 672 until 840 -> updateColorSticksPl1Down(3)
-                in 840 until 1000 -> updateColorSticksPl1Down(4)
+                in 30 until 100 -> updateColorSticksPl1Down(0)
+                in 100 until 150 -> updateColorSticksPl1Down(1)
+                in 150 until 200 -> updateColorSticksPl1Down(2)
+                in 200 until 350 -> updateColorSticksPl1Down(3)
+                in 350 until 1000 -> updateColorSticksPl1Down(4)
             }
         }
         player1 = tempPl1
 
         if (player2 < tempPl2) {
             when (tempPl2) {
-                in 160 until 336 -> updateColorSticksPl2Up(1)
-                in 336 until 504 -> updateColorSticksPl2Up(2)
-                in 504 until 672 -> updateColorSticksPl2Up(3)
-                in 672 until 840 -> updateColorSticksPl2Up(4)
-                in 840 until 1000 -> updateColorSticksPl2Up(5)
+                in 30 until 100 -> updateColorSticksPl2Up(1)
+                in 100 until 150 -> updateColorSticksPl2Up(2)
+                in 150 until 200 -> updateColorSticksPl2Up(3)
+                in 200 until 350 -> updateColorSticksPl2Up(4)
+                in 350 until 1000 -> updateColorSticksPl2Up(5)
             }
         } else {
             when (tempPl2) {
-                in 160 until 336 -> updateColorSticksPl2Down(0)
-                in 336 until 504 -> updateColorSticksPl2Down(1)
-                in 504 until 672 -> updateColorSticksPl2Down(2)
-                in 672 until 840 -> updateColorSticksPl2Down(3)
-                in 840 until 1000 -> updateColorSticksPl2Down(4)
+                in 30 until 100 -> updateColorSticksPl2Down(0)
+                in 100 until 150 -> updateColorSticksPl2Down(1)
+                in 150 until 200 -> updateColorSticksPl2Down(2)
+                in 200 until 350 -> updateColorSticksPl2Down(3)
+                in 350 until 1000 -> updateColorSticksPl2Down(4)
             }
         }
         player2 = tempPl2

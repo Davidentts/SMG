@@ -17,11 +17,11 @@ open class GameProcess(
         List<MutableList<Int>>(numberOfPlayers) { MutableList<Int>(0) { 0 } }
 
     protected var healthOfBoss: Int = when (robotPower) {
-        1 -> 46_000
-        2 -> 48_000
-        3 -> 50_000
-        4 -> 54_000
-        5 -> 57_000
+        1 -> 18_000
+        2 -> 19_000
+        3 -> 20_000
+        4 -> 21_500
+        5 -> 23_500
         else -> 50_000
     }
 
