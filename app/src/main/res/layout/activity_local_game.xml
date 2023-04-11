@@ -43,6 +43,18 @@
          />
 
     <TextView
+        android:id="@+id/countdownTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:textSize="15sp"
+        android:text="@string/timerStop"
+        android:textColor="@color/inactive_stick"
+        app:layout_constraintTop_toBottomOf="@+id/btStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
         android:id="@+id/tvNamePl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

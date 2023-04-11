@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -45,6 +46,8 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private lateinit var ibReconnection: ImageButton
     private lateinit var gameProcess: LocalAnimation
     private lateinit var countdown: TextView
+    private lateinit var countdownTimer: TextView
+    private var timer: CountDownTimer? = null
 
     private fun initView() {
         tvPl1 = findViewById(R.id.tvPl1)
@@ -55,6 +58,7 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
         ibReconnection = findViewById(R.id.ibReconnection)
         statusConnect = StatMsg(context = this, tvStatus = tvStatus, btStart = btStart)
         countdown = findViewById(R.id.countdown)
+        countdownTimer = findViewById(R.id.countdownTimer)
 
         gameProcess = LocalAnimation(
             this,
@@ -108,6 +112,24 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
     private fun startGame() {
         btConnection.sendMessage("L")
         gameProcess.clearAnimation()
+        countdown.text = ""
+        countdown.isVisible = false
+        countdownTimer.text = this.getString(R.string.timerStartLocal)
+    }
+
+    private fun startCountdownTimer(timeMillis: Long){
+        timer?.cancel()
+        timer = object : CountDownTimer(timeMillis, 1){
+            override fun onTick(p0: Long) {
+                val temp = p0 % 1000
+                val strMil = if (temp < 10) "0$temp" else temp
+                countdownTimer.text = String.format("00:0${(p0 / 1000).toString()}:${strMil}")
+            }
+
+            override fun onFinish() {
+                countdownTimer.text = this@LocalGameActivity.getString(R.string.timerStop)
+            }
+        }.start()
     }
 
     private fun initBtAdapter() {
@@ -139,10 +161,13 @@ class LocalGameActivity : AppCompatActivity(), ReceiveThread.ListenerData {
                     START_GAME -> {
                         countdown.text = ""
                         countdown.isVisible = false
+                        startCountdownTimer(10000)
                     }
                     FINISH -> {
                         gameFlag = false
                         gameProcess.stopGame()
+                        countdown.text = this@LocalGameActivity.getString(R.string.end_game)
+                        countdown.isVisible = true
                     }
                     else -> if (gameFlag) {
                         gameProcess.addNewData(message)
